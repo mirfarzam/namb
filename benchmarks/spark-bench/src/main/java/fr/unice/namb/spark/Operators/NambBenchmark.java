@@ -29,9 +29,6 @@ public class NambBenchmark {
     private Config.ConnectionShape connectionShape;
     private Config.TrafficRouting connectionRouting;
 
-    // workload
-    private WorkloadHandler workload;
-
     // windowing properties
     public static boolean _windowingEnable;
     public static int _windowingDuration;
@@ -60,8 +57,6 @@ public class NambBenchmark {
         // connection configuration
         this.connectionShape = nambConf.getWorkflow().getConnection().getShape();
         this.connectionRouting = nambConf.getWorkflow().getConnection().getRouting();
-        // workload configuration
-        this.workload = new WorkloadHandler(nambConf.getWorkflow().getWorkload());
         // windowing configuration
         _windowingEnable = nambConf.getWorkflow().getWindowing().isEnabled();
         Config.WindowingType windowingType = nambConf.getWorkflow().getWindowing().getType();

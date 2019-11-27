@@ -6,10 +6,10 @@ import scala.Tuple4;
 
 public class PrintResultForAction implements VoidFunction {
 
-    private int _depth;
+    private String _me;
 
-    public PrintResultForAction(int depth) {
-        _depth = depth;
+    public PrintResultForAction(String name) {
+        _me = name;
     }
 
     @Override
@@ -17,7 +17,7 @@ public class PrintResultForAction implements VoidFunction {
         final int[] i = {0};
         ((JavaRDD) o).foreach(ele -> {
             i[0]++;
-            System.out.println("[DEBUG] [ Print Rsult of Action-" + _depth + "] : " + ((Tuple4)ele)._2() + "," + ((Tuple4)ele)._3() + "," + System.currentTimeMillis() + "," + ((Tuple4)ele)._1() );
+            System.out.println("[DEBUG] [" + _me + "] : " + ((Tuple4)ele)._2() + "," + ((Tuple4)ele)._3() + "," + System.currentTimeMillis() + "," + ((Tuple4)ele)._1() );
         });
     }
 }

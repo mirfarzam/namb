@@ -28,6 +28,7 @@ public class NambBenchmark {
     // connection properties
     private Config.ConnectionShape connectionShape;
     private Config.TrafficRouting connectionRouting;
+    private int _depth;
 
     // windowing properties
     public static boolean _windowingEnable;
@@ -57,6 +58,7 @@ public class NambBenchmark {
         // connection configuration
         this.connectionShape = nambConf.getWorkflow().getConnection().getShape();
         this.connectionRouting = nambConf.getWorkflow().getConnection().getRouting();
+        this._depth = nambConf.getWorkflow().getDepth();
         // windowing configuration
         _windowingEnable = nambConf.getWorkflow().getWindowing().isEnabled();
         Config.WindowingType windowingType = nambConf.getWorkflow().getWindowing().getType();
@@ -88,7 +90,7 @@ public class NambBenchmark {
 
 
     public NambBenchmark appGenerator() throws Exception {
-        ArrayList<DAGNode> a = computeTopologyShape(Config.ConnectionShape.linear,4);
+        ArrayList<DAGNode> a = computeTopologyShape(connectionShape, _depth);
         int i = 0;
         while(i < a.size()) {
             baseDStream = a.get(i).run(baseDStream, i+1);

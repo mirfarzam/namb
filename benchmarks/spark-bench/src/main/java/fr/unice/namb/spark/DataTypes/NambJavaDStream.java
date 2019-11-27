@@ -50,7 +50,7 @@ public class NambJavaDStream<T> extends JavaDStream
         if(_filtering > 0) {
             Random _rand = new Random();
             NambJavaDStream filteredOutput = this.filterNamb(x -> _rand.nextInt(Config.WF_FILTERING_PRECISION) <= _filtering * Config.WF_FILTERING_PRECISION);
-            if(shouldPrint) filteredOutput.print();
+            if(shouldPrint) this.foreachRDD(new PrintResultForAction("BusyWaitActionNode " + depth));
             return filteredOutput;
         } else {
             return this;

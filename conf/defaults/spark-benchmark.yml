@@ -1,0 +1,4 @@
+debugFrequency: 0.1
+batchTime: 10
+master: local[5]
+applicationName: spark-numb

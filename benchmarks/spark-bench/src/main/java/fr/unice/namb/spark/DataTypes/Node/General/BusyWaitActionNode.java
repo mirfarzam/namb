@@ -13,12 +13,11 @@ public class BusyWaitActionNode implements DAGNode {
 
     @Override
     public NambJavaDStream run(NambJavaDStream input, int depth) throws Exception {
-        input.flatMapNamb(
+        return input.flatMapNamb(
                 new BusyWaitFlatMap(NambBenchmark.app.getNextProcessing(),
                         (NambBenchmark.app.getFilteringDagLevel() == depth) ? NambBenchmark.app.getFiltering() : 0,
                         0,
                         NambBenchmark._debugFrequency,
-                        "BusyWaitTransformationNode  " + depth ));
-        return input.customAction();
+                        "BusyWaitTransformationNode  " + depth )).customAction();
     }
 }

@@ -8,13 +8,16 @@ import scala.Tuple4;
 public class PrintResultForAction implements VoidFunction {
 
     private String _me;
+    private int _cycle;
 
-    public PrintResultForAction(String name) {
+    public PrintResultForAction(int cycle, String name) {
         _me = name;
+        _cycle = cycle;
     }
 
     @Override
     public void call(Object o) throws Exception {
+        for(int i = 0; i < _cycle; i++) {}
         final int[] i = {0};
         ((JavaRDD) o).foreach(ele -> {
             i[0]++;

@@ -15,6 +15,7 @@ import fr.unice.namb.utils.configuration.Config;
 import fr.unice.namb.utils.configuration.schema.NambConfigSchema;
 import fr.unice.namb.utils.configuration.schema.SparkConfigSchema;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
@@ -78,7 +79,10 @@ public class NambBenchmark {
         _master = sparkConf.getMaster();
         _applicationName = sparkConf.getApplicationName();
         // Define Spark Configuration Here
-        SparkConf conf = new SparkConf().setMaster(_master).setAppName(_applicationName);
+        SparkConf conf = new SparkConf()
+                .setMaster(_master)
+                .setAppName(_applicationName)
+                .set("spark.default.parallelism", "1000");
         // Define Java Spark Streaming Context
         _jssc = new JavaStreamingContext(conf, Durations.seconds(_batchTime));
         baseDStream = null;

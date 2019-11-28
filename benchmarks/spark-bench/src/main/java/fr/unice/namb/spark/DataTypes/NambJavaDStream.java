@@ -42,18 +42,10 @@ public class NambJavaDStream<T> extends JavaDStream
         return new NambJavaDStream(this.filter(f));
     }
 
-    public NambJavaDStream customAction(int cycle, double _filtering, int depth, boolean shouldPrint) {
-//        AtomicInteger count = new AtomicInteger();
-//        this.foreachRDD(rdd -> {count.incrementAndGet();System.out.println(count.get());});
-        this.foreachRDD(new BusyWaitForEachRdd(cycle));
-//        this.print();
-        if(_filtering > 0) {
-            Random _rand = new Random();
-            NambJavaDStream filteredOutput = this.filterNamb(x -> _rand.nextInt(Config.WF_FILTERING_PRECISION) <= _filtering * Config.WF_FILTERING_PRECISION);
-            if(shouldPrint) this.foreachRDD(new PrintResultForAction("BusyWaitActionNode " + depth));
-            return filteredOutput;
-        } else {
-            return this;
-        }
+    public NambJavaDStream repartitionNamb(int a) { return new NambJavaDStream(this.repartition(a)); }
+
+    public NambJavaDStream customAction() {
+        this.print(0);
+        return this;
     }
 }

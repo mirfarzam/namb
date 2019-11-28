@@ -4,9 +4,7 @@ import fr.unice.namb.spark.DataTypes.NambJavaDStream;
 import fr.unice.namb.spark.DataTypes.Node.DAGNode;
 import fr.unice.namb.spark.Operators.BusyWait.BusyWaitFlatMap;
 import fr.unice.namb.spark.Operators.NambBenchmark;
-import fr.unice.namb.utils.configuration.Config;
 
-import java.util.Random;
 
 public class BusyWaitActionNode implements DAGNode {
 
@@ -15,10 +13,12 @@ public class BusyWaitActionNode implements DAGNode {
 
     @Override
     public NambJavaDStream run(NambJavaDStream input, int depth) throws Exception {
-        return input.customAction(
-                NambBenchmark.app.getNextProcessing(),
-                NambBenchmark._debugFrequency,
-                depth,
-                true);
+        input.flatMapNamb(
+                new BusyWaitFlatMap(NambBenchmark.app.getNextProcessing(),
+                        (NambBenchmark.app.getFilteringDagLevel() == depth) ? NambBenchmark.app.getFiltering() : 0,
+                        0,
+                        NambBenchmark._debugFrequency,
+                        "BusyWaitTransformationNode  " + depth ));
+        return input.customAction();
     }
 }

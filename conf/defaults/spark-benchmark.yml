@@ -1,4 +1,5 @@
 debugFrequency: 0
 batchTime: 10
-master: local[2]
+master: local # local or spark master address not the local[x]
+executors: 5
 applicationName: spark-numb

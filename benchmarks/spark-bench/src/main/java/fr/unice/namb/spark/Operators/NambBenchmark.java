@@ -82,8 +82,8 @@ public class NambBenchmark {
         SparkConf conf = new SparkConf()
                 .setMaster(_master)
                 .setAppName(_applicationName)
-                .set("spark.default.parallelism", "6");
-        // Define Java Spark Streaming Context
+                .set("spark.default.parallelism", sparkConf.getExecutors());
+//        // Define Java Spark Streaming Context
         _jssc = new JavaStreamingContext(conf, Durations.seconds(_batchTime));
         baseDStream = null;
     }

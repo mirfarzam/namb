@@ -14,23 +14,12 @@ pipeline:
       distribution: uniform
       rate: 0
 
-  - name: source2
-    parallelism: 1
-    data:
-      size: 180
-      values: 1000
-      distribution: uniform
-    flow:
-      distribution: uniform
-      rate: 0
-
   - name: processing_task
     parallelism: 1
     routing: hash
     processing: 7
     parents:
       - source
-      - source2
 
   - name: sink
     parallelism: 1

@@ -313,7 +313,7 @@ public class BenchmarkApplication {
 
                                 }
 
-                                //TODO: impolement windowing
+                                //TODO: implement windowing
                                 op =  setRouting(streamUnion, newTask.getRouting())
                                         .flatMap(new BusyWaitFlatMap(newTask.getProcessing(), newTask.getFiltering(), newTask.getDataSize(), debugFrequency, newTask.getName()));
                             }

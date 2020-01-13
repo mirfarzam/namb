@@ -12,7 +12,10 @@ public class SparkConfigSchema extends ConfigSchema {
         return debugFrequency;
     }
     public static int getBatchTime() { return batchTime; }
-    public static String getMaster() {return master+"["+getExecutors()+"]";}
+    public static String getMaster() {
+        if (master.equals("local")) return master+"["+getExecutors()+"]";
+        else return master;
+    }
     public static String getApplicationName() {return applicationName;}
     public static String getExecutors() {return executors;}
 

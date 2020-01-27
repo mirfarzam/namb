@@ -10,6 +10,7 @@
         <version>${revision}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
+
     <groupId>fr.unice.namb</groupId>
     <artifactId>spark-bench</artifactId>
     <version>${spark.benchmark.version}</version>
@@ -32,21 +33,21 @@
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.12</artifactId>
-            <version>2.4.4</version>
+            <version>${spark.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_2.12</artifactId>
-            <version>2.4.4</version>
+            <version>${spark.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.12.1</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-scala -->

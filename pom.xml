@@ -16,6 +16,7 @@
         <flink.benchmark.version>0.4.1</flink.benchmark.version>
         <heron.benchmark.version>0.4.1</heron.benchmark.version>
         <storm.benchmark.version>0.4.1</storm.benchmark.version>
+        <spark.benchmark.version>0.0.1</spark.benchmark.version>
         <utils.version>0.2.0</utils.version>
         <!-- Dependencies versions -->
         <jackson.version>2.9.4</jackson.version>
@@ -25,6 +26,9 @@
         <flink.version>1.7.1</flink.version>
         <heron.version>0.17.4</heron.version>
         <storm.version>1.2.2</storm.version>
+        <spark.version>2.4.4</spark.version>
+        <!-- Log4j version -->
+        <log4j.version>2.12.1</log4j.version>
         <!-- Plugins versions -->
         <maven.flatten.version>1.1.0</maven.flatten.version>
         <maven.shade.version>3.2.1</maven.shade.version>
@@ -37,6 +41,7 @@
         <module>benchmarks/flink-bench</module>
         <module>benchmarks/storm-bench</module>
         <module>benchmarks/heron-bench</module>
+        <module>benchmarks/spark-bench</module>
     </modules>
 
     <dependencyManagement>

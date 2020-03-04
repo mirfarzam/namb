@@ -59,6 +59,22 @@ def run_flink(custom_bin_path=None, namb_conf=vars.NAMB_CONF, flink_conf=vars.FL
         raise CommandNotFound(flink_bin)
 
 
+def run_spark(custom_bin_path=None, namb_conf=vars.NAMB_CONF, spark_conf=vars.SPARK_CONF, master="local[*]"):
+
+    spark_bin = custom_bin_path if custom_bin_path else 'spark-submit'
+    spark_bin = "/Users/mirfarzam/Documents/spark/spark-2.4.4-bin-hadoop2.7/bin/spark-submit"
+
+    print(spark_bin)
+    print("revale")
+
+    if subprocess.run([spark_bin], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != CMD_NOT_FOUND_CODE:
+        spark_command = [spark_bin, "--master", master, "--class", vars.SPARK_CLASS, vars.SPARK_JAR, namb_conf, spark_conf]
+        subprocess.run(spark_command)
+        return
+    else:
+        raise CommandNotFound(spark_bin)
+
+
 def run(cmd, **kwargs):
     if cmd == 'storm':
         run_storm(kwargs["custom_bin_path"], kwargs["custom_namb_conf"], kwargs["custom_platform_conf"])
@@ -69,6 +85,9 @@ def run(cmd, **kwargs):
         return
     elif cmd == 'flink':
         run_flink(kwargs["custom_bin_path"], kwargs["custom_namb_conf"], kwargs["custom_platform_conf"], kwargs["detached"])
+
+    elif cmd == 'spark':
+        run_spark(kwargs["custom_bin_path"], kwargs["custom_namb_conf"], kwargs["custom_platform_conf"])
 
     else:
         print("Oh my gosh. You shall not be here... Run fool!")
@@ -125,6 +144,12 @@ if __name__ == "__main__":
     flink_parser.add_argument("-p","--path", dest="exec_path", metavar="<flink_executable>", help="path to Flink executable", default="flink")
     flink_parser.add_argument("-c", "--conf", dest="platform_conf", metavar="<flink_conf>", help="specify custom Flink benchmark configuration file", default=vars.FLINK_CONF)
     flink_parser.add_argument("-d", "--detached", dest="is_detached", action="store_true", help="run the benchmark in detached mode")
+
+    # spark subparser
+    spark_parser = subparser.add_parser('spark', help="Run Apache Spark benchmark")
+    spark_parser.add_argument("-p","--path", dest="exec_path", metavar="<spark_executable>", help="path to Spark executable", default="spark")
+    spark_parser.add_argument("-c", "--conf", dest="platform_conf", metavar="<spark_conf>", help="specify custom Spark benchmark configuration file", default=vars.SPARK_CONF)
+    spark_parser.add_argument("-d", "--detached", dest="is_detached", action="store_true", help="run the benchmark in detached mode")
 
     args = main_parser.parse_args()
 

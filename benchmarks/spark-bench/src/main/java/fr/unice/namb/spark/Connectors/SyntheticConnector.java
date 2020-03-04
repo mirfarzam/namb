@@ -1,10 +1,12 @@
 package fr.unice.namb.spark.Connectors;
 
+import fr.unice.namb.spark.DataTypes.Node.CounterState;
 import fr.unice.namb.utils.common.DataGenerator;
 import fr.unice.namb.utils.common.DataStream;
 import fr.unice.namb.utils.configuration.Config;
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.receiver.Receiver;
+import org.w3c.dom.css.Counter;
 import scala.Tuple4;
 
 import java.io.BufferedReader;
@@ -53,6 +55,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
         this.frequency = frequency;
         if(frequency > 0) this.rate = (int)(1 / frequency);
         else this.rate = 0;
+        CounterState.setKey(this.me);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
                                 this.dataStream.getInterMessageTime(this.distribution, (int) this.sleepTime)
                         );
                     }
-                    this.count++;
+                    this.count = new Long(CounterState.getKey(this.me));
                     String tuple_id = UUID.randomUUID().toString();
                     Long ts = System.currentTimeMillis();
                     store(new Tuple4<String, String, Long, Long>(nextValue, tuple_id, this.count, ts));

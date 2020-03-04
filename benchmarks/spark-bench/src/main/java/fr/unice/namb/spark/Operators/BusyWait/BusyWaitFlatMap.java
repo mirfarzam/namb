@@ -1,5 +1,7 @@
 package fr.unice.namb.spark.Operators.BusyWait;
 
+import com.codahale.metrics.Counter;
+import fr.unice.namb.spark.DataTypes.Node.CounterState;
 import fr.unice.namb.spark.Operators.NambBenchmark;
 import fr.unice.namb.utils.configuration.Config;
 import org.apache.spark.SparkContext;
@@ -27,6 +29,7 @@ public class BusyWaitFlatMap implements FlatMapFunction<Tuple4<String, String, L
         _filtering = filtering;
         _dataSize = dataSize;
         _me = operator_name;
+        CounterState.setKey(_me);
         _count = 0;
         if(frequency > 0) _rate = (int)(1 / frequency);
         else _rate = 0;
@@ -50,17 +53,20 @@ public class BusyWaitFlatMap implements FlatMapFunction<Tuple4<String, String, L
         String nextValue = in._1();
         String tuple_id = in._2();
 
+//        System.out.println("[DEBUG] [" + _me + " :  " + NambBenchmark._jssc.sparkContext().env().executorId() + "] : " + tuple_id + "," + _count + "," + ts + "," + nextValue );
+
+
         if(this._dataSize > 0 && this._dataSize < nextValue.length()){
             nextValue = nextValue.substring(0, this._dataSize);
         }
 
-        _count ++;
-        // simulate processing load
-//        for(int i = 0; i < 10000; i++){}
+        _count = CounterState.getKey(this._me);
+
+
         for(long i = 0; i < _cycles; i++){}
 
 
-        if (this._rate > 0 && this._count % this._rate == 0){
+        if (this._rate > 0 && _count % this._rate == 0){
             if (ts == 0) ts = System.currentTimeMillis();
             System.out.println("[DEBUG] [" + _me + " :  " + NambBenchmark._jssc.sparkContext().env().executorId() + "] : " + tuple_id + "," + _count + "," + ts + "," + nextValue );
         }

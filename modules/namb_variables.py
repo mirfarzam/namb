@@ -11,6 +11,8 @@ NAMB_VERSION = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}properties
 STORM_BENCHMARK_VERSION = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}properties").find("{http://maven.apache.org/POM/4.0.0}storm.benchmark.version").text
 HERON_BENCHMARK_VERSION = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}properties").find("{http://maven.apache.org/POM/4.0.0}heron.benchmark.version").text
 FLINK_BENCHMARK_VERSION = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}properties").find("{http://maven.apache.org/POM/4.0.0}flink.benchmark.version").text
+SPARK_BENCHMARK_VERSION = pom.getroot().find("{http://maven.apache.org/POM/4.0.0}properties").find("{http://maven.apache.org/POM/4.0.0}spark.benchmark.version").text
+
 
 CONF_PATH = "{}/conf".format(CWD)
 CONF_PATH_DEFAULTS = "{}/defaults".format(CONF_PATH)
@@ -27,3 +29,7 @@ HERON_CLASS = "fr.unice.namb.heron.BenchmarkApplication"
 
 FLINK_CONF = "{}/flink-benchmark.yml".format(CONF_PATH)
 FLINK_JAR = "{}/benchmarks/flink-bench/target/flink-bench-{}.jar".format(CWD, FLINK_BENCHMARK_VERSION)
+
+SPARK_CONF = "{}/spark-benchmark.yml".format(CONF_PATH)
+SPARK_JAR = "{}/benchmarks/spark-bench/target/spark-bench-{}.jar".format(CWD, SPARK_BENCHMARK_VERSION)
+SPARK_CLASS = "fr.unice.namb.spark.BenchmarkApplication"

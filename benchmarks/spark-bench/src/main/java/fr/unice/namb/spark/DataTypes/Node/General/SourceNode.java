@@ -51,7 +51,7 @@ public class SourceNode implements DAGNode {
                         NambBenchmark._distribution,
                         NambBenchmark._rate,
                         NambBenchmark._debugFrequency,
-                        (pipelined) ? nodeName :  "unique Source : " + depth
+                        (pipelined) ? nodeName :  "source : " + depth
                 ));
         NambJavaDStream NambInput = new NambJavaDStream<>(SourceNodeInput);
         return NambInput.windowNamb(NambBenchmark._windowingEnable, NambBenchmark._windowingDuration, NambBenchmark._windowingSlideDuration);

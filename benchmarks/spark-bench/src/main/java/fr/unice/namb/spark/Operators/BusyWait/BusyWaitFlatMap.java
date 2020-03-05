@@ -31,8 +31,9 @@ public class BusyWaitFlatMap implements FlatMapFunction<Tuple4<String, String, L
         _me = operator_name;
         CounterState.setKey(_me);
         _count = 0;
-        if(frequency > 0) _rate = (int)(1 / frequency);
+        if(frequency > 0) _rate = (int) Math.round(1/frequency);
         else _rate = 0;
+        System.out.println(_rate);
         this.open();
     }
 

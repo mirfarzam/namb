@@ -64,9 +64,6 @@ def run_spark(custom_bin_path=None, namb_conf=vars.NAMB_CONF, spark_conf=vars.SP
     spark_bin = custom_bin_path if custom_bin_path else 'spark-submit'
     spark_bin = "/Users/mirfarzam/Documents/spark/spark-2.4.4-bin-hadoop2.7/bin/spark-submit"
 
-    print(spark_bin)
-    print("revale")
-
     if subprocess.run([spark_bin], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != CMD_NOT_FOUND_CODE:
         spark_command = [spark_bin, "--master", master, "--class", vars.SPARK_CLASS, vars.SPARK_JAR, namb_conf, spark_conf]
         subprocess.run(spark_command)

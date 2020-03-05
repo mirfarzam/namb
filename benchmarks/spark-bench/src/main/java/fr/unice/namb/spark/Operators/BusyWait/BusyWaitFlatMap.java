@@ -1,8 +1,8 @@
 package fr.unice.namb.spark.Operators.BusyWait;
 
-import com.codahale.metrics.Counter;
-import fr.unice.namb.spark.DataTypes.Node.CounterState;
+import fr.unice.namb.spark.Utils.CounterState;
 import fr.unice.namb.spark.Operators.NambBenchmark;
+import fr.unice.namb.spark.Utils.Logger;
 import fr.unice.namb.utils.configuration.Config;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -68,7 +68,7 @@ public class BusyWaitFlatMap implements FlatMapFunction<Tuple4<String, String, L
 
         if (this._rate > 0 && _count % this._rate == 0){
             if (ts == 0) ts = System.currentTimeMillis();
-            System.out.println("[DEBUG] [" + _me + " :  " + NambBenchmark._jssc.sparkContext().env().executorId() + "] : " + tuple_id + "," + _count + "," + ts + "," + nextValue );
+            Logger.debug("[DEBUG] [" + _me + " :  " + NambBenchmark._jssc.sparkContext().env().executorId() + "] : " + tuple_id + "," + _count + "," + ts + "," + nextValue );
         }
 
         if(this._filtering > 0) {

@@ -1,6 +1,7 @@
 package fr.unice.namb.spark;
 
 import fr.unice.namb.spark.Operators.NambBenchmark;
+import fr.unice.namb.spark.Utils.Logger;
 import fr.unice.namb.utils.common.AppBuilder;
 import fr.unice.namb.utils.configuration.Config;
 import fr.unice.namb.utils.configuration.schema.NambConfigSchema;
@@ -34,13 +35,16 @@ public class BenchmarkApplication {
 
         if(nambConf != null && sparkConf != null) {
 
+            Logger.start();
             Config.validateConf(nambConf);
 
             JavaStreamingContext jssc = buildBenchmarkEnvironment(nambConf,  sparkConf);
             String executionName = "namb_bench_" + System.currentTimeMillis();
 
             jssc.start();
-            jssc.awaitTermination();
+//            jssc.awaitTermination();
+              jssc.awaitTerminationOrTimeout(10*60*1000);
+
 
         } else {
             throw new Exception("Something went wrong during configuration loading");

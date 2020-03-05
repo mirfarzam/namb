@@ -1,22 +1,14 @@
 package fr.unice.namb.spark.Connectors;
 
-import fr.unice.namb.spark.DataTypes.Node.CounterState;
+import fr.unice.namb.spark.Utils.CounterState;
+import fr.unice.namb.spark.Utils.Logger;
 import fr.unice.namb.utils.common.DataGenerator;
 import fr.unice.namb.utils.common.DataStream;
 import fr.unice.namb.utils.configuration.Config;
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.receiver.Receiver;
-import org.w3c.dom.css.Counter;
 import scala.Tuple4;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.ConnectException;
-import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Long>> {
@@ -92,7 +84,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
 
                     ts = System.currentTimeMillis();
                     if (this.rate > 0 && this.count % this.rate == 0){
-                        System.out.println("[DEBUG] [" + this.me + "] : " + tuple_id + "," + this.count + "," + ts + "," + nextValue);
+                        Logger.debug("[DEBUG] [" + this.me + "] : " + tuple_id + "," + this.count + "," + ts + "," + nextValue);
                     }
                 } catch (Exception e){
                     e.printStackTrace();

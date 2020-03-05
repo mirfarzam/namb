@@ -1,4 +1,4 @@
-package fr.unice.namb.spark.DataTypes.Node;
+package fr.unice.namb.spark.Utils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,5 +1,8 @@
 # Some entries borrowed from https://github.com/github/gitignore
 
+# Test Log files
+log*.txt
+
 # Maven files
 target/
 pom.xml.tag

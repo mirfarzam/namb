@@ -1,5 +1,6 @@
 debugFrequency: 0.10
 batchTime: 10
+timeout: 1200000
 master: local # local or spark master address not the local[x]
 executors: 5
 applicationName: spark-namb

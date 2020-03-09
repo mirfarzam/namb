@@ -4,6 +4,7 @@ public class SparkConfigSchema extends ConfigSchema {
 
     private static float debugFrequency;
     private static int batchTime;
+    private static long timeout;
     private static String master;
     private static String applicationName;
     private static String executors;
@@ -12,6 +13,7 @@ public class SparkConfigSchema extends ConfigSchema {
         return debugFrequency;
     }
     public static int getBatchTime() { return batchTime; }
+    public static long getTimeout() { return timeout; }
     public static String getMaster() {
         if (master.equals("local")) return master+"["+getExecutors()+"]";
         else return master;
@@ -24,6 +26,9 @@ public class SparkConfigSchema extends ConfigSchema {
     }
     public void setBatchTime(int batchtime) {
         this.batchTime = batchtime;
+    }
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
     }
     public void setMaster(String master) { this.master = master; }
     public void setExecutors(String executors) { this.executors = executors; }

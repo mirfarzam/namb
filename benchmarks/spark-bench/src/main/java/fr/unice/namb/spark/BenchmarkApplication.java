@@ -35,15 +35,15 @@ public class BenchmarkApplication {
 
         if(nambConf != null && sparkConf != null) {
 
-            Logger.start();
+            Logger.start(sparkConf.getApplicationName().toLowerCase(), System.currentTimeMillis());
             Config.validateConf(nambConf);
 
             JavaStreamingContext jssc = buildBenchmarkEnvironment(nambConf,  sparkConf);
-            String executionName = "namb_bench_" + System.currentTimeMillis();
+//            String executionName = "namb_bench_" + System.currentTimeMillis();
 
             jssc.start();
-//            jssc.awaitTermination();
-              jssc.awaitTerminationOrTimeout(10*60*1000);
+//          jssc.awaitTermination();
+            jssc.awaitTerminationOrTimeout(sparkConf.getTimeout());
 
 
         } else {

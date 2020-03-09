@@ -1,30 +1,67 @@
 package fr.unice.namb.spark.Utils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
+
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Logger {
 
-    static FileWriter fstream = null;  //true tells to append data.
-    static BufferedWriter out;
-    static File file;
+    private static RestHighLevelClient client;
 
+    private static String indexName;
 
-    public static void start() throws IOException {
-         file = new File("logfile" + System.currentTimeMillis() + ".txt");
+    public static void start(String appName, Long startingTime) throws IOException {
 
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+        indexName = appName.concat(startingTime.toString());
 
-        fstream = new FileWriter(file, true); //true tells to append data.
-        out = new BufferedWriter(fstream);
+        final CredentialsProvider credentialsProvider =
+                new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY,
+                new UsernamePasswordCredentials("elastic", "trA3/E/Njd2wjB4T43Lgzw=="));
+
+        RestClientBuilder builder = RestClient.builder(
+                new HttpHost("elasticsearch.datapirates.ir", 443, "https"))
+                .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+                    @Override
+                    public HttpAsyncClientBuilder customizeHttpClient(
+                            HttpAsyncClientBuilder httpClientBuilder) {
+                        return httpClientBuilder
+                                .setDefaultCredentialsProvider(credentialsProvider);
+                    }
+                });
+
+        client = new RestHighLevelClient(builder);
+
     }
 
     public static void debug(String log) throws IOException {
-        out.write("\n"+log);
-        out.flush();
+
+        Long id = System.currentTimeMillis();
+
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("timestamp", new Date());
+        jsonMap.put("type", "debug");
+        jsonMap.put("message", log);
+
+        IndexRequest request = new IndexRequest(indexName).id(id.toString()).source(jsonMap);
+
+        IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+
     }
 }

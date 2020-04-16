@@ -7,6 +7,9 @@ import fr.unice.namb.spark.Operators.NambBenchmark;
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.api.java.JavaDStream;
 
+import static org.apache.spark.api.java.StorageLevels.MEMORY_AND_DISK_SER;
+import static org.apache.spark.api.java.StorageLevels.MEMORY_ONLY_SER_2;
+
 public class MultiSourceNode implements DAGNode {
 
     private int _numberOfSource;
@@ -18,7 +21,7 @@ public class MultiSourceNode implements DAGNode {
     @Override
     public NambJavaDStream run(NambJavaDStream input, int depth) throws Exception {
         for (int i = 0; i < _numberOfSource; i++) {
-            JavaDStream<scala.Tuple4<String, String, Long, Long>> temp = NambBenchmark._jssc.receiverStream(new SyntheticConnector(StorageLevel.MEMORY_ONLY(), NambBenchmark._dataSize, NambBenchmark._dataValues, NambBenchmark._dataValuesBalancing, NambBenchmark._distribution, NambBenchmark._rate, NambBenchmark._debugFrequency, "farzam"));
+            JavaDStream<scala.Tuple4<String, String, Long, Long>> temp = NambBenchmark._jssc.receiverStream(new SyntheticConnector(StorageLevel.MEMORY_ONLY(), NambBenchmark._dataSize, NambBenchmark._dataValues, NambBenchmark._dataValuesBalancing, NambBenchmark._distribution, NambBenchmark._rate, NambBenchmark._debugFrequency, "farzam")).persist(MEMORY_ONLY_SER_2);
             baseDStream = baseDStream.union(temp);
         }
         NambJavaDStream NambInput = new NambJavaDStream<>(baseDStream);

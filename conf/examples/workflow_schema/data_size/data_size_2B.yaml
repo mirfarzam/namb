@@ -10,7 +10,7 @@ datastream:
       distribution: uniform
       rate: 0
 
-dataflow:
+workflow:
 
   depth: 4
 
@@ -27,4 +27,4 @@ dataflow:
     processing: 10
     balancing: balanced 
 
-  reliable: true
+  reliability: true

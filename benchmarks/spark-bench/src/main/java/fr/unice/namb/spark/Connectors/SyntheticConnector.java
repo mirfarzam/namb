@@ -47,7 +47,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
         this.frequency = frequency;
         if(frequency > 0) this.rate = (int)(1 / frequency);
         else this.rate = 0;
-        CounterState.setKey(this.me);
+        this.count = 0L;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
                                 this.dataStream.getInterMessageTime(this.distribution, (int) this.sleepTime)
                         );
                     }
-                    this.count = new Long(CounterState.getKey(this.me));
+                    this.count += 1;
                     String tuple_id = UUID.randomUUID().toString();
                     Long ts = System.currentTimeMillis();
                     store(new Tuple4<String, String, Long, Long>(nextValue, tuple_id, this.count, ts));

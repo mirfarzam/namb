@@ -11,6 +11,7 @@ import fr.unice.namb.spark.DataTypes.NambJavaDStream;
 import fr.unice.namb.spark.DataTypes.Node.General.SourceNode;
 import fr.unice.namb.spark.DataTypes.Node.Star.StarBusyWaitActionNode;
 import fr.unice.namb.spark.DataTypes.Node.Star.StarBusyWaitTransformationNode;
+import fr.unice.namb.spark.Utils.Logger;
 import fr.unice.namb.utils.common.AppBuilder;
 import fr.unice.namb.utils.common.DataStream;
 import fr.unice.namb.utils.common.Task;

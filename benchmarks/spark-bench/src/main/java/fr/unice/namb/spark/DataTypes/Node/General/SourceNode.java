@@ -13,6 +13,9 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import javax.xml.transform.Source;
 
+import static org.apache.spark.api.java.StorageLevels.MEMORY_AND_DISK_SER;
+import static org.apache.spark.api.java.StorageLevels.MEMORY_ONLY_SER_2;
+
 public class SourceNode implements DAGNode {
 
     private StorageLevel _storageLevel;
@@ -44,7 +47,7 @@ public class SourceNode implements DAGNode {
     public NambJavaDStream run(NambJavaDStream input, int depth) throws Exception {
 
         JavaDStream SourceNodeInput = NambBenchmark._jssc.receiverStream(
-                new SyntheticConnector(StorageLevel.MEMORY_ONLY(),
+                new SyntheticConnector(StorageLevel.MEMORY_AND_DISK_SER_2(),
                         NambBenchmark._dataSize,
                         NambBenchmark._dataValues,
                         NambBenchmark._dataValuesBalancing,

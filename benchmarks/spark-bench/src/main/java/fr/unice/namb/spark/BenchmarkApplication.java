@@ -38,12 +38,17 @@ public class BenchmarkApplication {
             Logger.start(sparkConf.getApplicationName().toLowerCase(), System.currentTimeMillis());
             Config.validateConf(nambConf);
 
-            JavaStreamingContext jssc = buildBenchmarkEnvironment(nambConf,  sparkConf);
-//            String executionName = "namb_bench_" + System.currentTimeMillis();
+            try {
+                JavaStreamingContext jssc = buildBenchmarkEnvironment(nambConf,  sparkConf);
 
-            jssc.start();
-//          jssc.awaitTermination();
-            jssc.awaitTerminationOrTimeout(sparkConf.getTimeout());
+                jssc.start();
+                jssc.awaitTerminationOrTimeout(sparkConf.getTimeout());
+
+
+            } catch (Exception e){
+                System.out.println(e.getMessage() + e.getStackTrace()[0].getClassName());
+            }
+
 
 
         } else {

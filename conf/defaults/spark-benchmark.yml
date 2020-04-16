@@ -1,6 +1,6 @@
 debugFrequency: 0.10
 batchTime: 10
 timeout: 1200000
-master: local # local or spark master address not the local[x]
+master: spark://10.189.12.54:7077 # local or spark master address not the local[x]
 executors: 5
-applicationName: spark-namb
+applicationName: test-mohammad

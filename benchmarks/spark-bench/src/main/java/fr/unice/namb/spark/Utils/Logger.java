@@ -6,6 +6,8 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.apache.spark.broadcast.Broadcast;
+import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.net.InetAddress;
 
 public class Logger {
 
@@ -28,7 +31,10 @@ public class Logger {
 
     public static void start(String appName, Long startingTime) throws IOException {
 
-        indexName = appName.concat(startingTime.toString());
+        indexName = appName;
+    }
+
+    public static void debug(String log) throws IOException {
 
         final CredentialsProvider credentialsProvider =
                 new BasicCredentialsProvider();
@@ -48,18 +54,15 @@ public class Logger {
 
         client = new RestHighLevelClient(builder);
 
-    }
-
-    public static void debug(String log) throws IOException {
-
-        Long id = System.currentTimeMillis();
+        Long time = System.currentTimeMillis();
+        String id = time.toString().concat("@").concat(InetAddress.getLocalHost().getHostName());
 
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("timestamp", new Date());
         jsonMap.put("type", "debug");
         jsonMap.put("message", log);
 
-        IndexRequest request = new IndexRequest(indexName).id(id.toString()).source(jsonMap);
+        IndexRequest request = new IndexRequest("jafar").id(id).source(jsonMap);
 
         IndexResponse response = client.index(request, RequestOptions.DEFAULT);
 

@@ -60,15 +60,15 @@ public class BusyWaitFlatMap implements FlatMapFunction<Tuple4<String, String, L
             nextValue = nextValue.substring(0, this._dataSize);
         }
 
-        _count += 1;
+        this._count += 1;
 
 
         for(long i = 0; i < _cycles; i++){}
 
 
-        if (this._rate > 0 && _count % this._rate == 0){
+        if (this._rate > 0 && this._count % this._rate == 0){
             if (ts == 0) ts = System.currentTimeMillis();
-            Logger.debug("[DEBUG] [" + _me + " :  " + NambBenchmark._jssc.sparkContext().env().executorId() + "] : " + tuple_id + "," + _count + "," + ts + "," + nextValue );
+            System.out.println("[DEBUG] ["+ System.currentTimeMillis() +"] [" + this._me + "] : " + tuple_id + "," + this._count + "," + ts + "," + nextValue );
         }
 
         if(this._filtering > 0) {

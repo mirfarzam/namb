@@ -84,7 +84,7 @@ public class SyntheticConnector extends Receiver<Tuple4<String, String, Long, Lo
 
                     ts = System.currentTimeMillis();
                     if (this.rate > 0 && this.count % this.rate == 0){
-                        Logger.debug("[DEBUG] [" + this.me + "] : " + tuple_id + "," + this.count + "," + ts + "," + nextValue);
+                       System.out.println("[DEBUG] ["+ System.currentTimeMillis() +"] [" + this.me + "] : " + tuple_id + "," + this.count + "," + ts + "," + nextValue);
                     }
                 } catch (Exception e){
                     e.printStackTrace();

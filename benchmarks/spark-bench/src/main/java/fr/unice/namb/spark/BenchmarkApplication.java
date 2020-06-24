@@ -43,8 +43,7 @@ public class BenchmarkApplication {
 
                 jssc.start();
                 jssc.awaitTerminationOrTimeout(sparkConf.getTimeout());
-
-
+//                jssc.awaitTermination();
             } catch (Exception e){
                 System.out.println(e.getMessage() + e.getStackTrace()[0].getClassName());
             }
